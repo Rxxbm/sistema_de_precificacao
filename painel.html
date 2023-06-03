@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Administração - Sistema de Precificação</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #343a40;
+      color: #fff;
+      height: 100vh;
+      position: fixed;
+    }
+
+    .content {
+      margin-left: 250px;
+      padding: 20px;
+    }
+
+    .content h2 {
+      margin-bottom: 20px;
+    }
+
+    .card {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sidebar">
+    <h4 class="text-center py-3">Painel de Administração</h4>
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link text-light" href="#">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-light" href="#">Funcionários</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-light" href="#">Precificações</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-light" href="#">Sair</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="content">
+    <h2>Dashboard</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Usuários</h5>
+            <p class="card-text">Gerencie os usuários do sistema.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Precificações</h5>
+            <p class="card-text">Gerencie as precificações do sistema.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
