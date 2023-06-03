@@ -4,7 +4,7 @@ session_start();
         include_once('conexao.php');
         
         $nome = $_POST['name'];
-        $senha = ($_POST['password']);
+        $senha = $_POST['password'];
         
         $sql = "SELECT * FROM usuarios WHERE nome = '$nome' and senha = '$senha'";
         
@@ -12,18 +12,13 @@ session_start();
         $row = $resultado->fetch_assoc();
         if(mysqli_num_rows($resultado) < 1){
             header("Location: index.php");
-
-            print_r($resultado);
         }else{
             $_SESSION['nome'] = $nome;
             $_SESSION['senha'] = $senha;
             if($row['admin'] == 1){
                 header("Location: painel.php");
-                
-                
             }else{    
                 header('Location: consultas.php');
-                print_r($resultado);
             }
 
         }

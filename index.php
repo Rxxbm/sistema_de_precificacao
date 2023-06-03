@@ -61,17 +61,17 @@
     <div class="row">
       <div class="col-md-6 mx-auto login-container">
         <h2 style="font-weight: 600;">Acesso</h2>
-        <form method="post" action="processar_login.php">
+        <form method="POST" action="processar_login.php">
           <div class="form-group">
-            <label for="username">Usuário</label>
-            <input type="text" id="name" name="username" required>
+            <label for="name">Usuário</label>
+            <input type="text" id="name" name="name" required>
           </div>
           <div class="form-group">
             <label for="password">Senha</label>
             <input type="password" id="password" name="password" required>
           </div>
           <div class="form-group">
-            <button type="submit">Entrar</button>
+            <button type="submit" name="submit">Entrar</button>
           </div>
         </form>
       </div>
