@@ -47,6 +47,7 @@
     .hidden {
       display: none;
     }
+    
   </style>
 </head>
 
@@ -63,7 +64,10 @@
             <a class="nav-link text-light" href="#" onclick="mostrarFormulario()">Funcionários</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light" href="#">Precificações</a>
+            <a class="nav-link text-light" href="#" onclick="mostrarPrecificacoes()">Precificações</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="consultas.php">Consultar Precificações</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-light" href="?logout=true">Sair</a>
@@ -93,6 +97,8 @@
             </div>
           </div>
         </div>
+
+        
 
         <div id="formulario" class="content hidden">
           <h2>Cadastro de Funcionários</h2>
@@ -192,9 +198,134 @@
                 <option value="1">Sim</option>
               </select>
             </div>
+
+              
+
             <button type="submit" class="btn btn-primary">Salvar Alterações</button>
           </form>
         </div>
+
+       <div class="content hidden" id="precificacao">
+        <h2>Cadastro de Precificação</h2>
+        <form method="post" action="cadastrar_servicos.php">
+          <div class="form-group">
+            <label for="nome_servico">Nome do Serviço:</label>
+            <input type="text" class="form-control" name="nome_servico" id="nome_servico" placeholder="Digite o nome do serviço" required>
+          </div>
+          <div class="form-group">
+            <label for="nome_empresa">Nome da Empresa:</label>
+            <input type="text" class="form-control" name="nome_empresa" id="nome_empresa" placeholder="Digite o nome da empresa" required>
+          </div>
+          <div class="form-group">
+            <label for="porte_empresa">Porte da Empresa:</label>
+            <select class="form-control" id="porte_empresa" name="porte_empresa" required>
+              <option value="Pequeno">Pequeno</option>
+              <option value="Médio">Médio</option>
+              <option value="Grande">Grande</option>
+              <option value="Empreendedor">Empreendedor</option>
+              <option value="Microempresa">Microempresa</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="dias_uteis">Dias Úteis:</label>
+            <input type="number" class="form-control" name="dias_uteis" id="dias_uteis" placeholder="Digite a quantidade de dias úteis" required>
+          </div>
+          <div class="form-group">
+            <label for="valor_dia">Valor Dia:</label>
+            <input type="number" class="form-control" name="valor_dia" id="valor_dia" placeholder="Digite a valor por dia" required>
+          </div>
+          <div class="form-group">
+            <label for="quantidade_membros">Quantidade de Membros:</label>
+            <input type="number" class="form-control" name="quantidade_membros" id="quantidade_membros" placeholder="Digite a quantidade de membros" required>
+          </div>
+          <div class="form-group">
+            <label for="custo_fixo">Custo Fixo:</label>
+            <input type="text" class="form-control" name="custo_fixo" id="custo_fixo" placeholder="Digite o custo fixo" required>
+          </div>
+          <div class="form-group">
+            <label for="custos_variaveis">Custos Variáveis:</label>
+            <input type="text" class="form-control" name="custos_variaveis" id="custos_variaveis" placeholder="Digite os custos variáveis" required>
+          </div>
+          <div class="form-group">
+            <label for="margem_incerteza">Margem de Incerteza:</label>
+            <select class="form-control" id="margem_incerteza" name="margem_incerteza" required>
+              <option value="0">0%</option>
+              <option value="0.01">1%</option>
+              <option value="0.02">2%</option>
+              <option value="0.03">3%</option>
+              <option value="0.04">4%</option>
+              <option value="0.05">5%</option>
+              <option value="0.06">6%</option>
+              <option value="0.07">7%</option>
+              <option value="0.08">8%</option>
+              <option value="0.09">9%</option>
+              <option value="0.1">10%</option>
+              </select>
+          </div>
+
+          <div class="form-group">
+            <label for="modalidade">Modalidade:</label>
+            <select class="form-control" id="modalidade" name="modalidade" required>
+              <option value="Online">Online</option>
+              <option value="Presencial">Presencial</option>
+            </select>
+          </div>
+          <button type="submit" name="submit" class="btn btn-primary">Cadastrar</button>
+        </form>
+
+        <div class="container content hidden" id="tabela_precificacao">
+        <h1>Tabela de Precificações</h1>
+        <table class="table-responsive">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Serviço</th>
+                    <th>Empresa</th>
+                    <th>Porte</th>
+                    <th>Dias Úteis</th>
+                    <th>Valor por Dia</th>
+                    <th>Membros</th>
+                    <th>Custo Fixo</th>
+                    <th>Custos Variáveis</th>
+                    <th>Margem de Incerteza</th>
+                    <th>Modalidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                // Conexão com o banco de dados aqui...
+                include_once('conexao.php');
+                // Consulta SQL para selecionar os dados da tabela
+                $sql = "SELECT * FROM servicos";
+                $result = $connect->query($sql);
+
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . $row["id"] . "</td>";
+                        echo "<td>" . $row["servico"] . "</td>";
+                        echo "<td>" . $row["empresa"] . "</td>";
+                        echo "<td>" . $row["porte"] . "</td>";
+                        echo "<td>" . $row["dias_uteis"] . "</td>";
+                        echo "<td>R$ " . $row["valor_dia"] . "</td>";
+                        echo "<td>" . $row["membros"] . "</td>";
+                        echo "<td>R$ " . $row["custo_fixo"] . "</td>";
+                        echo "<td>R$ " . $row["custos_variaveis"] . "</td>";
+                        echo "<td>" . $row["margem_incerteza"] . "</td>";
+                        echo "<td>" . $row["modalidade"] . "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='11'>Nenhum dado encontrado</td></tr>";
+                }
+
+                // Fecha a conexão
+                $connect->close();
+                ?>
+            </tbody>
+        </table>
+    </div>
+
       </div>
     </div>
   </div>
@@ -204,12 +335,23 @@
       document.getElementById('container').classList.add('hidden');
       document.getElementById('formulario').classList.remove('hidden');
       document.getElementById('tabela').classList.remove('hidden');
+      document.getElementById('precificacao').classList.add('hidden');
+      document.getElementById('tabela_precificacao').classList.add('hidden');
     }
 
     function mostrarDashboard() {
       document.getElementById('formulario').classList.add('hidden');
       document.getElementById('container').classList.remove('hidden');
       document.getElementById('tabela').classList.add('hidden');
+      document.getElementById('precificacao').classList.add('hidden');
+      document.getElementById('tabela_precificacao').classList.add('hidden');
+    }
+    function mostrarPrecificacoes(){
+      document.getElementById('formulario').classList.add('hidden');
+      document.getElementById('container').classList.add('hidden');
+      document.getElementById('tabela').classList.add('hidden');
+      document.getElementById('precificacao').classList.remove('hidden');
+      document.getElementById('tabela_precificacao').classList.remove('hidden');
     }
 
     function alterarFuncionario(id) {
