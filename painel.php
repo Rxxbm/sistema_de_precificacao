@@ -289,6 +289,7 @@
                     <th>Custos Variáveis</th>
                     <th>Margem de Incerteza</th>
                     <th>Modalidade</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -301,18 +302,23 @@
 
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
+                        $id = $row["id"];
                         echo "<tr>";
                         echo "<td>" . $row["id"] . "</td>";
-                        echo "<td>" . $row["servico"] . "</td>";
-                        echo "<td>" . $row["empresa"] . "</td>";
-                        echo "<td>" . $row["porte"] . "</td>";
-                        echo "<td>" . $row["dias_uteis"] . "</td>";
-                        echo "<td>R$ " . $row["valor_dia"] . "</td>";
-                        echo "<td>" . $row["membros"] . "</td>";
-                        echo "<td>R$ " . $row["custo_fixo"] . "</td>";
-                        echo "<td>R$ " . $row["custos_variaveis"] . "</td>";
-                        echo "<td>" . $row["margem_incerteza"] . "</td>";
-                        echo "<td>" . $row["modalidade"] . "</td>";
+                        echo "<td id='servico-$id'>" . $row["servico"] . "</td>";
+                        echo "<td id='empresa-$id'> " . $row["empresa"] . "</td>";
+                        echo "<td id='porte-$id'>" . $row["porte"] . "</td>";
+                        echo "<td id='dias_uteis-$id'>" . $row["dias_uteis"] . "</td>";
+                        echo "<td id='valor_dia-$id'>R$ " . $row["valor_dia"] . "</td>";
+                        echo "<td id='membros-$id'>" . $row["membros"] . "</td>";
+                        echo "<td id='custo_fixo-$id'>R$ " . $row["custo_fixo"] . "</td>";
+                        echo "<td id='custos_variaveis-$id'>R$ " . $row["custos_variaveis"] . "</td>";
+                        echo "<td id='margem_incerteza-$id'>" . $row["margem_incerteza"] . "</td>";
+                        echo "<td id='modalidade-$id'>" . $row["modalidade"] . "</td>";
+                        echo "<td>";
+                        echo "<button class='btn btn-primary' onclick='alterarServico($id)'>Alterar</button>";
+                        echo "<button class='btn btn-danger' onclick='excluirServico($id)'>Excluir</button>";
+                        echo "</td>";
                         echo "</tr>";
                     }
                 } else {
@@ -324,6 +330,76 @@
                 ?>
             </tbody>
         </table>
+    </div>
+    <div class="container content hidden" id="servico-alteracao">
+      <h2>Alteração de Serviço</h2>
+    <form method="post" action="dados_servicos.php">
+            <input type="hidden" name="acao" value="alteracao">
+            <input type="hidden" id="alteracao2-id" name="id" value="">
+          <div class="form-group">
+            <label for="nome_servico">Nome do Serviço:</label>
+            <input type="text" class="form-control" name="nome_servico" id="nome_servico-alteracao" placeholder="Digite o nome do serviço" required>
+          </div>
+          <div class="form-group">
+            <label for="nome_empresa">Nome da Empresa:</label>
+            <input type="text" class="form-control" name="nome_empresa" id="nome_empresa-alteracao" placeholder="Digite o nome da empresa" required>
+          </div>
+          <div class="form-group">
+            <label for="porte_empresa">Porte da Empresa:</label>
+            <select class="form-control" id="porte_empresa-alteracao" name="porte_empresa" required>
+              <option value="Pequeno">Pequeno</option>
+              <option value="Médio">Médio</option>
+              <option value="Grande">Grande</option>
+              <option value="Empreendedor">Empreendedor</option>
+              <option value="Microempresa">Microempresa</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="dias_uteis">Dias Úteis:</label>
+            <input type="number" class="form-control" name="dias_uteis" id="dias_uteis-alteracao" placeholder="Digite a quantidade de dias úteis" required>
+          </div>
+          <div class="form-group">
+            <label for="valor_dia">Valor Dia:</label>
+            <input type="number" class="form-control" name="valor_dia" id="valor_dia-alteracao" placeholder="Digite a valor por dia" required>
+          </div>
+          <div class="form-group">
+            <label for="quantidade_membros">Quantidade de Membros:</label>
+            <input type="number" class="form-control" name="quantidade_membros" id="quantidade_membros-alteracao" placeholder="Digite a quantidade de membros" required>
+          </div>
+          <div class="form-group">
+            <label for="custo_fixo">Custo Fixo:</label>
+            <input type="text" class="form-control" name="custo_fixo" id="custo_fixo-alteracao" placeholder="Digite o custo fixo" required>
+          </div>
+          <div class="form-group">
+            <label for="custos_variaveis">Custos Variáveis:</label>
+            <input type="text" class="form-control" name="custos_variaveis" id="custos_variaveis-alteracao" placeholder="Digite os custos variáveis" required>
+          </div>
+          <div class="form-group">
+            <label for="margem_incerteza">Margem de Incerteza:</label>
+            <select class="form-control" id="margem_incerteza-alteracao" name="margem_incerteza" required>
+              <option value="0">0%</option>
+              <option value="0.01">1%</option>
+              <option value="0.02">2%</option>
+              <option value="0.03">3%</option>
+              <option value="0.04">4%</option>
+              <option value="0.05">5%</option>
+              <option value="0.06">6%</option>
+              <option value="0.07">7%</option>
+              <option value="0.08">8%</option>
+              <option value="0.09">9%</option>
+              <option value="0.1">10%</option>
+              </select>
+          </div>
+
+          <div class="form-group">
+            <label for="modalidade">Modalidade:</label>
+            <select class="form-control" id="modalidade-alteracao" name="modalidade" required>
+              <option value="Online">Online</option>
+              <option value="Presencial">Presencial</option>
+            </select>
+          </div>
+          <button type="submit" name="submit" class="btn btn-primary">Enviar</button>
+        </form>
     </div>
 
       </div>
@@ -375,6 +451,63 @@
         var form = document.createElement("form");
         form.method = "POST";
         form.action = "dados_funcionarios.php";
+
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "acao";
+        input.value = "exclusao";
+        form.appendChild(input);
+
+        input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "id";
+        input.value = id;
+        form.appendChild(input);
+
+        // Adiciona o formulário à página e envia-o
+        document.body.appendChild(form);
+        form.submit();
+      }
+    }
+      function alterarServico(id) {
+      // Obtém os valores do funcionário a ser alterado
+      document.getElementById("alteracao2-id").value = id;
+      var servico = document.getElementById("servico-" + id).innerText;
+      var empresa = document.getElementById("empresa-" + id).innerText;
+      var porte = document.getElementById("porte-" + id).innerText;
+      var dias_uteis = document.getElementById("dias_uteis-" + id).innerText;
+      var valor_dia = document.getElementById("valor_dia-" + id).innerText;
+      var valor_dia = valor_dia.replace(/\D/g, "");
+      var membros = document.getElementById("membros-" + id).innerText;
+      var custo_fixo = document.getElementById("custo_fixo-" + id).innerText;
+      var custo_fixo = custo_fixo.replace(/\D/g, "");
+      var custos_variaveis = document.getElementById("custos_variaveis-" + id).innerText;
+      var custos_variaveis = custos_variaveis.replace(/\D/g, "");
+      var margem_incerteza = document.getElementById("margem_incerteza-" + id).innerText;
+      var modalidade = document.getElementById("modalidade-" + id).innerText;
+
+      // Preenche o formulário de alteração com os valores do serviço
+      document.getElementById("nome_servico-alteracao").value = servico;
+      document.getElementById("nome_empresa-alteracao").value = empresa;
+      document.getElementById("porte_empresa-alteracao").value = porte;
+      document.getElementById("dias_uteis-alteracao").value = dias_uteis;
+      document.getElementById("valor_dia-alteracao").value = valor_dia;
+      document.getElementById("quantidade_membros-alteracao").value = membros;
+      document.getElementById("custo_fixo-alteracao").value = custo_fixo;
+      document.getElementById("custos_variaveis-alteracao").value = custos_variaveis;
+      document.getElementById("porte_empresa-alteracao").value = margem_incerteza;
+      document.getElementById("margem_incerteza-alteracao").value = modalidade;
+
+      // Exibe o formulário de alteração
+      document.getElementById("servico-alteracao").classList.remove("hidden");
+    }
+
+    function excluirServico(id) {
+      if (confirm("Deseja realmente excluir este serviço?")) {
+        // Cria um formulário para enviar o ID do serviço a ser excluído
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "dados_servicos.php";
 
         var input = document.createElement("input");
         input.type = "hidden";
